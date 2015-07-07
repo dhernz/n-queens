@@ -47,7 +47,7 @@
         this.hasColConflictAt(colIndex) ||
         this.hasMajorDiagonalConflictAt(this._getFirstRowColumnIndexForMajorDiagonalOn(rowIndex, colIndex)) ||
         this.hasMinorDiagonalConflictAt(this._getFirstRowColumnIndexForMinorDiagonalOn(rowIndex, colIndex))
-      );
+        );
     },
 
     hasAnyQueensConflicts: function() {
@@ -58,7 +58,7 @@
       return (
         0 <= rowIndex && rowIndex < this.get('n') &&
         0 <= colIndex && colIndex < this.get('n')
-      );
+        );
     },
 
 
@@ -69,7 +69,7 @@
     \__ \ || (_| | |  | |_  | | | |  __/ | |  __/_
     |___/\__\__,_|_|   \__| |_| |_|\___|_|  \___(_)
 
- */
+    */
     /*=========================================================================
     =                 TODO: fill in these Helper Functions                    =
     =========================================================================*/
@@ -79,13 +79,62 @@
     //
     // test if a specific row on this board contains a conflict
     hasRowConflictAt: function(rowIndex) {
-      return false; // fixme
+      var result = false;
+      var pieceCount = 0;
+      var myRows = this.get(rowIndex);
+      for(var i = 0; i < myRows.length; i++){
+
+        if(myRows[i]){
+          pieceCount++;
+        };
+
+
+      }
+
+      if (pieceCount>=2){
+        result = true;
+      }; 
+      return result;
+
     },
 
     // test if any rows on this board contain conflicts
     hasAnyRowConflicts: function() {
-      return false; // fixme
-    },
+     // //  console.log(this);  
+     var hasConflict = false;
+
+     for(var i = 0; i < this.attributes[0].length; i++){ 
+      if(this.hasRowConflictAt(i)){
+        hasConflict = true;
+      };
+
+    };
+
+    return hasConflict;
+
+/*
+var coordinateArray = [];
+for(var i = 0; i < this.attributes[0].length; i++){
+  for(var j = 0; j < this.attributes[0].length; j++){
+  if(this.attributes[i][j]){
+  coordinateArray.push("" +i+ "" + ""+ j+"")
+  }
+  }
+}
+
+*/
+    //  for(var j = 0; j < this.attributes[0].length-1; j++){
+    //   if(hasRowConflictAt(currentRow)===false){
+    //     currentRow++;
+    //     hasAnyRowConflicts(currentRow);
+    //   }
+    //   if(hasRowConflictAt(currentRow)){
+    //     result = true;
+    //   }
+    // }
+    // return result; 
+
+  },
 
 
 
@@ -94,13 +143,35 @@
     //
     // test if a specific column on this board contains a conflict
     hasColConflictAt: function(colIndex) {
-      return false; // fixme
+      var result = false;
+      var pieceCount = 0;
+
+      for(var i = 0; i < this.attributes[0].length; i++){
+        if(this.attributes[i][colIndex]){
+          pieceCount++;
+        };
+
+        if(pieceCount>=2){
+          result = true;
+        }; 
+      }
+
+      return result;
     },
 
     // test if any columns on this board contain conflicts
     hasAnyColConflicts: function() {
-      return false; // fixme
-    },
+     var hasConflict = false;
+
+     for(var i = 0; i < this.attributes[0].length; i++){ 
+      if(this.hasColConflictAt(i)){
+        hasConflict = true;
+      };
+
+    };
+
+    return hasConflict;
+  },
 
 
 
@@ -109,7 +180,22 @@
     //
     // test if a specific major diagonal on this board contains a conflict
     hasMajorDiagonalConflictAt: function(majorDiagonalColumnIndexAtFirstRow) {
-      return false; // fixme
+      var boardColumn = majorDiagonalColumnIndexAtFirstRow
+      var result = false;
+      var pieceCount = 0;
+      
+      for(var i = 0; i < this.attributes[0].length-1; i++){
+        if(this.attributes[i][boardColumn]){
+            pieceCount++;
+          
+        };
+
+        if(pieceCount>1){
+          result = true;
+        }; 
+      }
+
+      return result;
     },
 
     // test if any major diagonals on this board contain conflicts
@@ -137,12 +223,12 @@
 
   });
 
-  var makeEmptyMatrix = function(n) {
+var makeEmptyMatrix = function(n) {
+  return _(_.range(n)).map(function() {
     return _(_.range(n)).map(function() {
-      return _(_.range(n)).map(function() {
-        return 0;
-      });
+      return 0;
     });
-  };
+  });
+};
 
 }());
