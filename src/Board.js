@@ -200,12 +200,16 @@
     //
     // test if a specific minor diagonal on this board contains a conflict
     hasMinorDiagonalConflictAt: function(minorDiagonalColumnIndexAtFirstRow) {
+      console.log('minorDiagonalColumnIndexAtFirstRow is:',minorDiagonalColumnIndexAtFirstRow);
+      // if(minorDiagonalColumnIndexAtFirstRow === 6) {
+        debugger;
+      // }
       var result = false;
       var minorColumn = minorDiagonalColumnIndexAtFirstRow;
       var pieceCount = 0
-      
+
       for(var i = 0; i<this.attributes[0].length; i++){
-        if(minorColumn<this.attributes[0].length){
+        if(minorColumn<2*this.attributes[0].length){
           if(this.attributes[i][minorColumn]){
             pieceCount++;
           }
@@ -220,21 +224,20 @@
 
     // test if any minor diagonals on this board contain conflicts
     hasAnyMinorDiagonalConflicts: function() {
+      debugger;
       var hasConflict = false;
-      for(var i = 0; i < this.attributes[0].length; i++){                                                                                                                                                                                                                                                                                                                                                                                                                         
-        if(this.hasMinorDiagonalConflictAt[i]){
-          hasConflict = true;
+
+        for(var i = 0; i < 2*(this.attributes[0].length); i++){                                                                                                                                                                                                                                                                                                                                                                                                                         
+          if(this.hasMinorDiagonalConflictAt(i)){
+            hasConflict = true;
+          }
         }
-        
-      }
+
       return hasConflict;
     }
 
-    /*--------------------  End of Helper Functions  ---------------------*/
-
-
-
-  });
+  /*--------------------  End of Helper Functions  ---------------------*/
+});
 
 var makeEmptyMatrix = function(n) {
   return _(_.range(n)).map(function() {
