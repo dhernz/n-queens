@@ -4,7 +4,7 @@
   \__ \ (_) | |\ V /  __/ |  \__ \
   |___/\___/|_| \_/ \___|_|  |___/
 
-*/
+  */
 
 // hint: you'll need to do a full-search of all possible arrangements of pieces!
 // (There are also optimizations that will allow you to skip a lot of the dead search space)
@@ -14,20 +14,38 @@
 // return a matrix (an array of arrays) representing a single nxn chessboard, with n rooks placed such that none of them can attack each other
 
 window.findNRooksSolution = function(n) {
-  var solution = undefined; //fixme
 
-  console.log('Single solution for ' + n + ' rooks:', JSON.stringify(solution));
-  return solution;
 };
 
 
 
 // return the number of nxn chessboards that exist, with n rooks placed such that none of them can attack each other
 window.countNRooksSolutions = function(n) {
-  var solutionCount = undefined; //fixme
+  var board = new Board({n:n});
+  var solutions = 0; 
 
-  console.log('Number of solutions for ' + n + ' rooks:', solutionCount);
-  return solutionCount;
+    // define rSolutionFinder
+    var rSolutionFinder = function(numRooksPlaced){
+      if(numRooksPlaced === n){
+        solutions++;
+        return;
+      } else{
+        //iterate through the row
+        for(var i = 0; i < n; i++){
+          //toggle a piece
+          board.togglePiece(numRooksPlaced,i);
+          //check for conclicts 
+          if(board.hasAnyRooksConflicts() === false){
+          // if no conflicts, recurse, with one more rook places
+          rSolutionFinder(numRooksPlaced +1);
+        }
+        board.togglePiece(numRooksPlaced,i);
+      }
+    }
+  }
+  rSolutionFinder(0);
+
+  return solutions;
 };
 
 
